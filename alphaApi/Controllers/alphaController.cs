@@ -28,9 +28,9 @@ namespace alphaApi.Controllers
         }
 
 
-        // REQ: GET /alpha/{firmId}
+        // REQ: GET /alpha/firmId/{firmId}
         [HttpGet]
-        [Route("alpha/{firmId}")]
+        [Route("managersByFirm/{firmId}")]
         public List<DepartmentsAndManagersByFirtmDTO> GetManagersAndTheirDepartments(int firmId)
         {
             return repository.GetManagersAndDepartmentsByFirmId(firmId); 

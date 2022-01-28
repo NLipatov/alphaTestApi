@@ -419,7 +419,7 @@ namespace alphaApi.Repository
                 BeginDate = new DateTime(2021, 1, 10),
                 DisbandDate = new DateTime(2099, 1, 1),
                 Id = 312,
-                ManagerId = 9331,
+                ManagerId = 93121,
                 ParentId = 311,
                 Title = "Отдел досудебных разбирательств"
             },
@@ -439,9 +439,9 @@ namespace alphaApi.Repository
         //Companies
         private readonly List<Firm> firms = new()
         {
-            new Firm { Id = 1, Title = "Alpha" },
-            new Firm { Id = 2, Title = "Beta" },
-            new Firm { Id = 3, Title = "Gamma" }
+            new Firm { Id = 1, Title = "Альфа" },
+            new Firm { Id = 2, Title = "Бета" },
+            new Firm { Id = 3, Title = "Гамма" }
         };
 
 
@@ -490,7 +490,7 @@ namespace alphaApi.Repository
                 DepartmentTitle = GetDepartmentTitleById(x.DepartmentId, departments),
                 Fullname = x.FullName
             }).ToList();
-            return resultingList;
+            return resultingList.Where(x=>x.FirmId == id).ToList();
         }
         public List<Department> subDeps = new();
         public List<Department> GetDepartmentSubDepartmentsList(int id)
