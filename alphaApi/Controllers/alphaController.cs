@@ -1,4 +1,5 @@
-﻿using alphaApi.Entities;
+﻿using alphaApi.DTOs;
+using alphaApi.Entities;
 using alphaApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,6 +25,15 @@ namespace alphaApi.Controllers
         {
             var employees = repository.GetActiveEmployees();
             return employees;
+        }
+
+
+        // REQ: GET /alpha/{firmId}
+        [HttpGet]
+        [Route("alpha/{firmId}")]
+        public List<DepartmentsAndManagersByFirtmDTO> GetManagersAndTheirDepartments(int firmId)
+        {
+            return repository.GetManagersAndDepartmentsByFirmId(firmId); 
         }
     }
 }

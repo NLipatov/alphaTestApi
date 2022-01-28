@@ -484,8 +484,8 @@ namespace alphaApi.Repository
             employees.RemoveAll(x => x.isManager == false);
             List<DepartmentsAndManagersByFirtmDTO> resultingList = employees.Select(x => new DepartmentsAndManagersByFirtmDTO
             {
-                FirmId = x.DepartmentId.ToString()[0],
-                FirmTitle = GetFirmTitleById(x.DepartmentId.ToString()[0], firms),
+                FirmId = Int32.Parse(x.DepartmentId.ToString().Substring(0, 1)),
+                FirmTitle = GetFirmTitleById((Int32.Parse(x.DepartmentId.ToString().Substring(0, 1))), firms),
                 DepartmentId = x.DepartmentId,
                 DepartmentTitle = GetDepartmentTitleById(x.DepartmentId, departments),
                 Fullname = x.FullName
