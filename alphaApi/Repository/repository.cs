@@ -68,27 +68,27 @@ namespace alphaApi.Repository
 
             new Employee
             {
-                FullName = "Лихачёва Рамина Гордеевна",
-                DateIn = new DateTime(2021, 3, 8),
+                FullName = "Ефимова Владислава Георгиевна",
+                DateIn = new DateTime(2021, 3, 9),
                 DateOut = pseudoFiredDate,
                 Id = 91211,
-                DepartmentId = 12,
+                DepartmentId = 121,
                 Gender = 0,
                 isManager = true,
-                Login = @"ALPHA\Likhachova",
-                PhoneNumber = "7-235-237-85-76"
+                Login = @"ALPHA\Efimova",
+                PhoneNumber = "7-235-357-85-76"
             },
             new Employee
             {
-                FullName = "Вишнякова Леся Авксентьевна",
+                FullName = "Ершова Эдда Тимофеевна",
                 DateIn = new DateTime(2021, 3, 10),
                 DateOut = pseudoFiredDate,
                 Id = 91212,
-                DepartmentId = 12,
+                DepartmentId = 121,
                 Gender = 0,
                 isManager = false,
                 Login = @"ALPHA\Vishnyakova",
-                PhoneNumber = "7-623-457-85-55"
+                PhoneNumber = "7-653-667-85-95"
             }
         };
         private readonly List<Employee> betaEmployees = new()
@@ -341,7 +341,7 @@ namespace alphaApi.Repository
                 BeginDate = new DateTime(2021, 3, 8),
                 DisbandDate = new DateTime(2099, 1, 1),
                 Id = 121,
-                ManagerId = 91212,
+                ManagerId = 91211,
                 ParentId = 12,
                 Title = "Группа ведения отчётности"
             },
@@ -448,15 +448,14 @@ namespace alphaApi.Repository
         public List<Employee> GetActiveEmployees()
         {
             List<Employee> allWorkersList = new();
-            return allWorkersList.Concat(alphaEmployees).Concat(betaEmployees).Concat(gammaEmployees).ToList();
+            List<Employee> resultingList = allWorkersList.Concat(alphaEmployees).Concat(betaEmployees).Concat(gammaEmployees).ToList();
+            resultingList.RemoveAll(x => x.DateOut != pseudoFiredDate);
+            return resultingList;
         }
         public List<Employee> GetActiveEmployees(int departmentId)
         {
-            List<Employee> allWorkersList = new();
-            allWorkersList.Concat(alphaEmployees.Where(x => x.DepartmentId == departmentId))
-                .Concat(alphaEmployees.Where(x => x.DepartmentId == departmentId))
-                .Concat(alphaEmployees.Where(x => x.DepartmentId == departmentId)).ToList().RemoveAll(x => x.DateOut.CompareTo(pseudoFiredDate) == 0);
-            return allWorkersList;
+            List<Employee> employeesOfThisDepartment = GetActiveEmployees().Where(x => x.DepartmentId == departmentId).ToList();
+            return employeesOfThisDepartment;
         }
 
 
@@ -493,20 +492,29 @@ namespace alphaApi.Repository
             return resultingList.Where(x=>x.FirmId == id).ToList();
         }
         public List<Department> subDeps = new();
-        public List<Department> GetDepartmentSubDepartmentsList(int id)
+        public void GetDepartmentSubDepartmentsList(int id)
         {
-            subDeps.AddRange(departments.Where(x => x.ParentId == id));
-            foreach (var department in subDeps)
+            List<Department> subs = (departments.Where(x => x.ParentId == id).ToList());
+            if (subs.Count != 0)
             {
-                GetDepartmentSubDepartmentsList(department.Id);
+                subDeps.AddRange(subs);
+                foreach (var department in subs)
+                {
+                    GetDepartmentSubDepartmentsList(department.Id);
+                }
             }
-            List<Department> resultingList = JsonConvert.DeserializeObject<List<Department>>(JsonConvert.SerializeObject(subDeps));
-            subDeps.Clear();
-            return resultingList;
+        }
+        public Employee GetEmployeeById(int id)
+        {
+            List<Employee> allWorkersList = new();
+            return allWorkersList.Concat(alphaEmployees).Concat(betaEmployees).Concat(gammaEmployees).ToList().FirstOrDefault(x=>x.Id == id);
         }
         public List<Employee> GetManagerSubordinates(int id)
         {
-            List<Department> subordinateDepartments = GetDepartmentSubDepartmentsList(id);
+            GetDepartmentSubDepartmentsList(departments.First(x=>x.ManagerId == id).Id);
+            List<Department> subordinateDepartments = new();
+            subordinateDepartments.AddRange(subDeps);
+            subDeps.Clear();
 
             List<Employee> subordinateEmployees = new();
             foreach (var department in subordinateDepartments)

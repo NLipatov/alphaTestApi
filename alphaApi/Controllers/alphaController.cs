@@ -35,5 +35,14 @@ namespace alphaApi.Controllers
         {
             return repository.GetManagersAndDepartmentsByFirmId(firmId); 
         }
+
+
+        // REQ: GET /managerSubordinates/{managerId}
+        [HttpGet]
+        [Route("managerSubordinates/{managerId}")]
+        public List<Employee> GetManagerSubordinatesEmployees(int managerId)
+        {
+            return repository.GetManagerSubordinates(managerId);
+        }
     }
 }
