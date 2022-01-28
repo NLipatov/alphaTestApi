@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace alphaApi.Entities
 {
-    public class Firm
+    public record Firm
     {
+        public int Id { get; init; }
+        public string Title { get; set; }
     }
 }
