@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace alphaApi.Repository
 {
-    public class repository
+    public class repository : Irepository
     {
         static DateTime pseudoFiredDate = new DateTime(2099, 1, 1);
 
@@ -314,37 +314,125 @@ namespace alphaApi.Repository
         //Departments
         private readonly List<Department> departments = new()
         {
-            new Department{ FirmId = 1, BeginDate = new DateTime(2021, 2, 23), DisbandDate = new DateTime(2099, 1, 1),
-                            Id = 11, ManagerId = 9111, ParentId = null, Title = "Административный отдел Альфа"  },
+            new Department
+            {
+                FirmId = 1,
+                BeginDate = new DateTime(2021, 2, 23),
+                DisbandDate = new DateTime(2099, 1, 1),
+                Id = 11,
+                ManagerId = 9111,
+                ParentId = null,
+                Title = "Административный отдел Альфа"
+            },
 
-            new Department{FirmId = 1, BeginDate = new DateTime(2021, 3, 8), DisbandDate = new DateTime(2099, 1, 1),
-                            Id = 12, ManagerId = 9121, ParentId = 11, Title = "Бухгалтерия"},
-            new Department{FirmId = 1, BeginDate = new DateTime(2021, 3, 8), DisbandDate = new DateTime(2099, 1, 1),
-                            Id = 121, ManagerId = 91212, ParentId = 12, Title = "Группа ведения отчётности"},
+            new Department
+            {
+                FirmId = 1,
+                BeginDate = new DateTime(2021, 3, 8),
+                DisbandDate = new DateTime(2099, 1, 1),
+                Id = 12,
+                ManagerId = 9121,
+                ParentId = 11,
+                Title = "Бухгалтерия"
+            },
+            new Department
+            {
+                FirmId = 1,
+                BeginDate = new DateTime(2021, 3, 8),
+                DisbandDate = new DateTime(2099, 1, 1),
+                Id = 121,
+                ManagerId = 91212,
+                ParentId = 12,
+                Title = "Группа ведения отчётности"
+            },
 
             // 
 
-            new Department{FirmId = 2, BeginDate = new DateTime(2021, 1, 10), DisbandDate = new DateTime(2099, 1, 1),
-                            Id = 21, ManagerId = 9211, ParentId = null, Title = "Административный отдел Бета"},
+            new Department
+            {
+                FirmId = 2,
+                BeginDate = new DateTime(2021, 1, 10),
+                DisbandDate = new DateTime(2099, 1, 1),
+                Id = 21,
+                ManagerId = 9211,
+                ParentId = null,
+                Title = "Административный отдел Бета"
+            },
 
-            new Department{FirmId = 2, BeginDate = new DateTime(2021, 1, 11), DisbandDate = new DateTime(2099, 1, 1),
-                            Id = 211, ManagerId = 9221, ParentId = 21, Title = "Отдел разработки информационных систем"},
+            new Department
+            {
+                FirmId = 2,
+                BeginDate = new DateTime(2021, 1, 11),
+                DisbandDate = new DateTime(2099, 1, 1),
+                Id = 211,
+                ManagerId = 9221,
+                ParentId = 21,
+                Title = "Отдел разработки информационных систем"
+            },
 
-            new Department{FirmId = 2, BeginDate = new DateTime(2021, 1, 11), DisbandDate = new DateTime(2099, 1, 1),
-                            Id = 2111, ManagerId = 9221, ParentId = 21, Title = "Группа разработки"},
-            new Department{FirmId = 2, BeginDate = new DateTime(2021, 1, 11), DisbandDate = new DateTime(2099, 1, 1),
-                            Id = 2112, ManagerId = 9221, ParentId = 21, Title = "Группа поддержки"},
+            new Department
+            {
+                FirmId = 2,
+                BeginDate = new DateTime(2021, 1, 11),
+                DisbandDate = new DateTime(2099, 1, 1),
+                Id = 2111,
+                ManagerId = 9221,
+                ParentId = 21,
+                Title = "Группа разработки"
+            },
+            new Department
+            {
+                FirmId = 2,
+                BeginDate = new DateTime(2021, 1, 11),
+                DisbandDate = new DateTime(2099, 1, 1),
+                Id = 2112,
+                ManagerId = 9221,
+                ParentId = 21,
+                Title = "Группа поддержки"
+            },
             //
 
-            new Department{FirmId = 3, BeginDate = new DateTime(2021, 2, 1), DisbandDate = new DateTime(2099, 1, 1),
-                            Id = 31, ManagerId = 9311, ParentId = null, Title = "Административный отдел Гамма"},
+            new Department
+            {
+                FirmId = 3,
+                BeginDate = new DateTime(2021, 2, 1),
+                DisbandDate = new DateTime(2099, 1, 1),
+                Id = 31,
+                ManagerId = 9311,
+                ParentId = null,
+                Title = "Административный отдел Гамма"
+            },
 
-            new Department{FirmId = 3, BeginDate = new DateTime(2021, 2, 5), DisbandDate = new DateTime(2099, 1, 1),
-                            Id = 311, ManagerId = 9321, ParentId = 31, Title = "Юридический отдел"},
-            new Department{FirmId = 3, BeginDate = new DateTime(2021, 1, 10), DisbandDate = new DateTime(2099, 1, 1),
-                            Id = 312, ManagerId = 9331, ParentId = 311, Title = "Отдел досудебных разбирательств"},
-            new Department{FirmId = 3, BeginDate = new DateTime(2021, 1, 10), DisbandDate = new DateTime(2099, 1, 1),
-                            Id = 313, ManagerId = 9341, ParentId = 311, Title = "Отдел судебных разбирательств"},
+            new Department
+            {
+                FirmId = 3,
+                BeginDate = new DateTime(2021, 2, 5),
+                DisbandDate = new DateTime(2099, 1, 1),
+                Id = 311,
+                ManagerId = 9321,
+                ParentId = 31,
+                Title = "Юридический отдел"
+            },
+            new Department
+            {
+                FirmId = 3,
+                BeginDate = new DateTime(2021, 1, 10),
+                DisbandDate = new DateTime(2099, 1, 1),
+                Id = 312,
+                ManagerId = 9331,
+                ParentId = 311,
+                Title = "Отдел досудебных разбирательств"
+            },
+            new Department
+            {
+                FirmId = 3,
+                BeginDate = new DateTime(2021, 1, 10),
+                DisbandDate = new DateTime(2099, 1, 1),
+                Id = 313,
+                ManagerId = 9341,
+                ParentId = 311,
+                Title = "Отдел судебных разбирательств"
+            },
         };
 
 
@@ -360,15 +448,12 @@ namespace alphaApi.Repository
         public List<Employee> GetActiveEmployees()
         {
             List<Employee> allWorkersList = new();
-            allWorkersList.Concat(alphaEmployees)
-                .Concat(betaEmployees)
-                .Concat(gammaEmployees).ToList().RemoveAll(x=>x.DateOut.CompareTo(pseudoFiredDate) == 0);
-            return allWorkersList;
+            return allWorkersList.Concat(alphaEmployees).Concat(betaEmployees).Concat(gammaEmployees).ToList();
         }
         public List<Employee> GetActiveEmployees(int departmentId)
         {
             List<Employee> allWorkersList = new();
-            allWorkersList.Concat(alphaEmployees.Where(x=>x.DepartmentId == departmentId))
+            allWorkersList.Concat(alphaEmployees.Where(x => x.DepartmentId == departmentId))
                 .Concat(alphaEmployees.Where(x => x.DepartmentId == departmentId))
                 .Concat(alphaEmployees.Where(x => x.DepartmentId == departmentId)).ToList().RemoveAll(x => x.DateOut.CompareTo(pseudoFiredDate) == 0);
             return allWorkersList;
@@ -377,8 +462,8 @@ namespace alphaApi.Repository
 
         public string GetFirmTitleById(int id, List<Firm> Firms)
         {
-            Firm firmWithGivenId = firms.FirstOrDefault(x=>x.Id == id);
-            if(firmWithGivenId != null)
+            Firm firmWithGivenId = firms.FirstOrDefault(x => x.Id == id);
+            if (firmWithGivenId != null)
             {
                 return firmWithGivenId.Title;
             }
@@ -402,7 +487,7 @@ namespace alphaApi.Repository
                 FirmId = x.DepartmentId.ToString()[0],
                 FirmTitle = GetFirmTitleById(x.DepartmentId.ToString()[0], firms),
                 DepartmentId = x.DepartmentId,
-                DepartmentTitle = GetDepartmentTitleById(x.DepartmentId ,departments),
+                DepartmentTitle = GetDepartmentTitleById(x.DepartmentId, departments),
                 Fullname = x.FullName
             }).ToList();
             return resultingList;
