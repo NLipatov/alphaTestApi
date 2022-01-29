@@ -40,7 +40,7 @@ namespace alphaApi.Controllers
         // REQ: GET /managerSubordinates/{managerId}
         [HttpGet]
         [Route("managerSubordinates/{managerId}")]
-        public List<Employee> GetManagerSubordinatesEmployees(int managerId)
+        public ActionResult<List<Employee>> GetManagerSubordinatesEmployees(int managerId)
         {
             return repository.GetManagerSubordinates(managerId);
         }

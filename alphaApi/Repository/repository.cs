@@ -4,7 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json; 
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
 
 namespace alphaApi.Repository
 {
@@ -87,7 +88,7 @@ namespace alphaApi.Repository
                 DepartmentId = 121,
                 Gender = 0,
                 isManager = false,
-                Login = @"ALPHA\Vishnyakova",
+                Login = @"ALPHA\Ershova",
                 PhoneNumber = "7-653-667-85-95"
             }
         };
@@ -280,7 +281,7 @@ namespace alphaApi.Repository
                 DepartmentId = 312,
                 Gender = 0,
                 isManager = false,
-                Login = @"ALPHA\Sharapov",
+                Login = @"ALPHA\Sharapova",
                 PhoneNumber = "7-326-598-89-87"
             },
 
@@ -293,7 +294,7 @@ namespace alphaApi.Repository
                 DepartmentId = 313,
                 Gender = 0,
                 isManager = true,
-                Login = @"ALPHA\Uvarov",
+                Login = @"ALPHA\Efimova",
                 PhoneNumber = "7-987-456-23-45"
             },
             new Employee
@@ -305,7 +306,7 @@ namespace alphaApi.Repository
                 DepartmentId = 313,
                 Gender = 0,
                 isManager = false,
-                Login = @"ALPHA\Sharapov",
+                Login = @"ALPHA\Rodionova",
                 PhoneNumber = "7-548-663-89-87"
             }
         };
@@ -365,7 +366,7 @@ namespace alphaApi.Repository
                 BeginDate = new DateTime(2021, 1, 11),
                 DisbandDate = new DateTime(2099, 1, 1),
                 Id = 211,
-                ManagerId = 9221,
+                ManagerId = 92111,
                 ParentId = 21,
                 Title = "Отдел разработки информационных систем"
             },
@@ -376,8 +377,8 @@ namespace alphaApi.Repository
                 BeginDate = new DateTime(2021, 1, 11),
                 DisbandDate = new DateTime(2099, 1, 1),
                 Id = 2111,
-                ManagerId = 9221,
-                ParentId = 21,
+                ManagerId = 921111,
+                ParentId = 211,
                 Title = "Группа разработки"
             },
             new Department
@@ -386,8 +387,8 @@ namespace alphaApi.Repository
                 BeginDate = new DateTime(2021, 1, 11),
                 DisbandDate = new DateTime(2099, 1, 1),
                 Id = 2112,
-                ManagerId = 9221,
-                ParentId = 21,
+                ManagerId = 921121,
+                ParentId = 211,
                 Title = "Группа поддержки"
             },
             //
@@ -409,7 +410,7 @@ namespace alphaApi.Repository
                 BeginDate = new DateTime(2021, 2, 5),
                 DisbandDate = new DateTime(2099, 1, 1),
                 Id = 311,
-                ManagerId = 9321,
+                ManagerId = 93111,
                 ParentId = 31,
                 Title = "Юридический отдел"
             },
@@ -429,7 +430,7 @@ namespace alphaApi.Repository
                 BeginDate = new DateTime(2021, 1, 10),
                 DisbandDate = new DateTime(2099, 1, 1),
                 Id = 313,
-                ManagerId = 9341,
+                ManagerId = 93131,
                 ParentId = 311,
                 Title = "Отдел судебных разбирательств"
             },
@@ -509,11 +510,19 @@ namespace alphaApi.Repository
             List<Employee> allWorkersList = new();
             return allWorkersList.Concat(alphaEmployees).Concat(betaEmployees).Concat(gammaEmployees).ToList().FirstOrDefault(x=>x.Id == id);
         }
-        public List<Employee> GetManagerSubordinates(int id)
+        public ActionResult<List<Employee>> GetManagerSubordinates(int id)
         {
-            GetDepartmentSubDepartmentsList(departments.First(x=>x.ManagerId == id).Id);
+            try
+            {
+                GetDepartmentSubDepartmentsList(departments.First(x => x.ManagerId == id).Id);
+            }
+            catch
+            {
+                return new BadRequestResult();
+            }
             List<Department> subordinateDepartments = new();
             subordinateDepartments.AddRange(subDeps);
+            subordinateDepartments.Add(departments.First(x => x.ManagerId == id));
             subDeps.Clear();
 
             List<Employee> subordinateEmployees = new();
@@ -521,6 +530,7 @@ namespace alphaApi.Repository
             {
                 subordinateEmployees.AddRange(GetActiveEmployees(department.Id));
             }
+            subordinateEmployees.Remove(subordinateEmployees.First(x => x.Id == id));
             return subordinateEmployees;
         }
     }
