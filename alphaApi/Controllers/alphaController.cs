@@ -21,6 +21,7 @@ namespace alphaApi.Controllers
 
         // REQ: GET address: /alpha
         [HttpGet]
+        [Route("getAllWorkers")]
         public List<Employee> GetEmployees()
         {
             var employees = repository.GetActiveEmployees();
@@ -28,9 +29,9 @@ namespace alphaApi.Controllers
         }
 
 
-        // REQ: GET /alpha/firmId/{firmId}
+        // REQ: GET /managersByFirm/{firmId}
         [HttpGet]
-        [Route("managersByFirm/{firmId}")]
+        [Route("managersByFirm")]
         public List<DepartmentsAndManagersByFirtmDTO> GetManagersAndTheirDepartments(int firmId)
         {
             return repository.GetManagersAndDepartmentsByFirmId(firmId); 
@@ -39,7 +40,7 @@ namespace alphaApi.Controllers
 
         // REQ: GET /managerSubordinates/{managerId}
         [HttpGet]
-        [Route("managerSubordinates/{managerId}")]
+        [Route("managerSubordinates")]
         public ActionResult<List<Employee>> GetManagerSubordinatesEmployees(int managerId)
         {
             return repository.GetManagerSubordinates(managerId);
